@@ -1,0 +1,186 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Axie </title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
+</head>
+<body >
+    <div class="main-content">
+        <div class="container">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" 
+                  type="button" role="tab" aria-controls="home" aria-selected="true">Calculator</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" 
+                  type="button" role="tab" aria-controls="profile" aria-selected="false">Energy</button>
+                </li>           
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-10 mx-auto">
+                                <div id="result"> </div>
+                                
+                                <div class="input-group mt-2 mb-2">
+                                    <select  class="form-select" id="axie" >
+                                        <option value="" selected disabled> -- your axie  -- </option>
+                                        <option value="aqua"> aqua </option>
+                                        <option value="bird"> bird </option>
+                                        <option value="beast"> beast </option>
+                                        <option value="bug"> bug </option>
+                                        <option value="plant"> plant </option>
+                                        <option value="reptile"> reptile </option>
+                                        <option value="dawn"> dawn </option>
+                                        <option value="dusk"> dusk </option>
+                                        <option value="mech"> mech </option>                             
+                                    </select>
+                                    <select  class="form-select" id="target" >
+                                        <option value="" selected disabled> -- target axie -- </option>
+                                        <option value="aqua"> aqua </option>
+                                        <option value="bird"> bird </option>
+                                        <option value="beast"> beast </option>
+                                        <option value="bug"> bug </option>
+                                        <option value="plant"> plant </option>
+                                        <option value="reptile"> reptile </option>
+                                        <option value="dawn"> dawn </option>
+                                        <option value="dusk"> dusk </option>
+                                        <option value="mech"> mech </option>     
+                                    </select>
+                                </div>
+        
+                                <div class="input-group mb-2">
+                                    <input type="number" class="form-control" placeholder="hp" id="hp"  >
+                                    <input type="number" class="form-control" id="armor" placeholder="armor" >
+                                </div>
+        
+                                <div id="cards">
+                                    Card
+                                    <div class="input-group">
+                                        <select name="classCard" class="form-select" id="class"  placeholder="class" >
+                                            <option value="" selected disabled> -- class -- </option>
+                                            <option value="aqua"> aqua </option>
+                                            <option value="bird"> bird </option>
+                                            <option value="beast"> beast </option>
+                                            <option value="bug"> bug </option>
+                                            <option value="plant"> plant </option>
+                                            <option value="reptile"> reptile </option>
+        
+                                        </select>
+                                        <input name="dmgCard" type="number" class="form-control" id="dmg" placeholder="dmg"  >
+                                        <input name="atkupCard" typtype="text" class="form-control atkupCard"  placeholder="atk up%" >
+                                    </div>
+        
+                                    <div class="input-group">
+                                        <select name="classCard" class="form-select"  placeholder="class" >
+                                            <option value="" selected disabled> -- class -- </option>
+                                            <option value="aqua"> aqua </option>
+                                            <option value="bird"> bird </option>
+                                            <option value="beast"> beast </option>
+                                            <option value="bug"> bug </option>
+                                            <option value="plant"> plant </option>
+                                            <option value="reptile"> reptile </option>
+                                        </select>
+                                        <input name="dmgCard" type="number" class="form-control"   placeholder="dmg" >
+                                        <input name="atkupCard" type="text" class="form-control atkupCard"  placeholder="atk up%" >
+                                    </div>
+        
+                                    <div class="input-group">
+                                        <select name="classCard" class="form-select"  placeholder="class" >
+                                            <option value="" selected disabled> -- class -- </option>
+                                            <option value="aqua"> aqua </option>
+                                            <option value="bird"> bird </option>
+                                            <option value="beast"> beast </option>
+                                            <option value="bug"> bug </option>
+                                            <option value="plant"> plant </option>
+                                            <option value="reptile"> reptile </option>
+                                        </select>
+                                        <input name="dmgCard" type="number" class="form-control"  placeholder="dmg" >
+                                        <input name="atkupCard" type="text" class="form-control atkupCard"   placeholder="atk up%" >
+                                    </div>
+        
+                                    <div class="input-group">
+                                        <select name="classCard" class="form-select"  placeholder="class" >
+                                            <option value="" selected disabled> -- class -- </option>
+                                            <option value="aqua"> aqua </option>
+                                            <option value="bird"> bird </option>
+                                            <option value="beast"> beast </option>
+                                            <option value="bug"> bug </option>
+                                            <option value="plant"> plant </option>
+                                            <option value="reptile"> reptile </option>
+                                        </select>
+                                        <input name="dmgCard" type="number" class="form-control"   placeholder="dmg" >
+                                        <input name="atkupCard" type="text" class="form-control atkupCard"  placeholder="atk up%" >
+                                    </div>
+        
+                                </div>
+        
+                                <div class="d-grid gap-2 pt-2">
+                                    <button class="btn btn-success" type="submit"> <i class="fa fa-calculator" ></i> Calculator</button>
+                                    <button class="btn btn-danger" type="button" id="reset"> <i class="fa fa-refresh"></i> Reset </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="row">
+                        <div class="col-md-12 mx-auto">
+
+                            <h3> Round  <b id="round"> 1 </b></h3>
+                            <div class="axie-content">
+                                <div class="axie-content-energy"></div>
+                                <div class="axie-content-card"></div>
+                            </div>
+                         
+
+                            <input type="text"  id="card" style="display:none"  value='6' />  
+                            <input type="text"  id="energy"  style="display:none" value='3' />     
+                            
+                            
+                            <div class="row">
+                                <div class="col">
+                                    <div>  Card </div>
+                                    <button class='plus btn btn-dark w-50' id="plusCard"><i class='fa fa-plus'></i></button>  
+                                    <button class='minus btn btn-secondary w-50' id="minusCard"><i class="fa fa-minus"></i></button>                                 
+                                </div>
+                                <div class="col">
+                                    <div> Cost </div>
+                                    <button class='plus btn btn-cost-one w-50'  id="plusCost1">1</button>  
+                                    <button class='minus btn btn-cost-zero w-50'  id="plusCost0"> 0 </i></button>                                 
+                                </div>
+                                <div class="col">
+                                    <div> Energy </div>
+                                    <button class='plus btn btn-dark w-50' id="plus"><i class='fa fa-plus'></i></button> 
+                                    <button class='minus btn btn-secondary w-50' id="minus"><i class="fa fa-minus"></i></button> 
+                                </div>
+                            </div>
+
+        
+                            <div class="d-grid gap-2 pt-2">
+                                <button class="btn btn-success" id="endTurn"> <i class="fa fa-hourglass-end" ></i> End turn</button>
+                                <button class="btn btn-danger" id="resetTurn"><i class="fa fa-refresh" ></i> Reset </button>
+                            </div>
+                            
+        
+                        </div>
+                    </div>
+
+
+                </div>
+              </div>
+            
+        </div>
+    </div>
+</body>
+<script src="./js/bs.js" ></script>
+<script src='./js/main.js' type="module"></script>
+</html>

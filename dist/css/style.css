@@ -1,0 +1,128 @@
+.main-content {
+    max-width: 500px;
+    text-align:center;
+    margin:0 auto;
+    padding:30px 15px;
+}
+
+#result {
+    height: 85px;
+    visibility: hidden;
+    margin : 5px 0px;
+}
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}
+
+option:first-child
+{
+    color: #ccc;
+}
+
+select
+{
+    color: #ccc;
+}
+
+.form-select.invalid {
+    border-color: #dc3545;
+}
+
+.form-control.invalid{
+    border-color: #dc3545;
+}
+.form-control.is-invalid {
+    padding-right : 0.75rem !important;
+    /* padding: .375rem .75rem !important; */
+    background-image: unset !important;
+}
+
+ .form-select.is-invalid {
+    padding-right : 2.25rem !important;
+    /* padding: .375rem .75rem !important; */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") !important;
+}
+
+.main {
+    margin : 20px;
+}
+.counter {
+width: 100px;  
+border-radius: 0px !important;
+text-align: center;
+}
+.plus {
+margin-bottom: 5px;  
+margin-left: -4px;
+/* border-top-left-radius: 0px;
+border-bottom-left-radius: 0px; */
+} 
+.minus {
+margin-bottom: 5px;  
+margin-right: -4px;
+/* border-top-right-radius: 0px;
+border-bottom-right-radius: 0px; */
+}
+
+.axie-content {
+  margin: 15px 0;
+}
+
+.axie-energy {
+    width: 85px;
+    display: block;
+    margin: 15px auto;
+    height: 80px;
+    border: solid 3px red;
+    background: #ff6207;
+    border-radius: 50%;
+    padding-top: 15px;
+    font-size: 30px;
+}
+
+.axie-content-energy {
+    margin : 1.5rem 0;
+}
+.axie-content-card {
+    margin-bottom: 1.6rem;
+}
+
+.axie-content-card {
+    height: 5.6em;
+}
+.axie-card {
+    display: inline-block;
+    width: 1.8em;
+    height: 2.8em;
+    border: 1px solid #666;
+    border-radius: 0.3em;
+    padding: 0.6em .25em .25em .25em;
+    margin: 0 .1em .1em 0;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: normal;
+    font-family: Arial, sans-serif;
+    position: relative;
+    background-color: #fff;
+    box-shadow: 0.1em 0.1em 0.3em #333;
+}
+
+.btn-cost-one {
+    background: #ef6321;
+    color:#fff;
+    font-size : .9em;
+    font-weight: 600;
+}
+
+.btn-cost-zero {
+    background: #f58b08;
+    color:#fff;
+    font-size : .9em;
+    font-weight: 600;
+}
+    
+
