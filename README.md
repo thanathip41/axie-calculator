@@ -22,143 +22,71 @@ DB_USERNAME = root
 DB_PASSWORD = password
 DB_DATABASE = database
 ```
-## Basic Usage
-
+## Tspace-mysql: Getting Started
 ```js
-/**
- * DB
- * 
- * @Usage DB
-*/
 import { DB } from 'tspace-mysql'
-
 (async () => {
     await new DB().raw('SELECT * FROM users')
-    await new DB().table('users').where('active',true).findMany()
-    await new DB().table('users').whereIn('id',[1,2,3]).where('active','!=',true).findOne()
-    
-    const db = await new DB().table('users')
-        db.name = 'name'
-        db.username = 'username'
-
-    const result =  await db.save() 
-    /* 
-        await db.save()
-        const { result } = db
-    */
-    
-    await new DB()
-       .table('users')
-        .create({
-            name : 'name',
-            username: 'users'
-        }).save()
-
-    await new DB()
-        .table('users')
-        .createMultiple([{
-            name : 'name',
-            username: 'users'
-        },
-        {
-            name : 'name2',
-            username: 'users2'
-        },
-        {
-            name : 'name3',
-            username: 'users3'
-        }]).save()
-
-    await new DB()
-        .table('users')
-        .whereUser(1)
-        .update({
-            name: 'users12345'
-        }).save()
-
-    await new DB().where('id',1).delete()
-
-    await new DB()
-        .table('users')
-        .where('id',1)
-        .updateOrCreate({
-            name: 'users12345'
-        }).save()
-
-    await new DB()
-        .table('users')
-        .whereId(1)
-        .createNotExists({
-            name: 'users12345'
-        }).save()
-
-        /**
-         * transaction statement
-         * 
-        */
-       const transaction = await new DB().beginTransaction()
-
-        try { 
-
-            const user = await new DB()
-                .table('users')
-                .create({
-                    name: 'users12345'
-                },transaction)
-                .save()
-
-            await new DB()
-                .table('posts')
-                .create({
-                    user_id: user.id
-                },transaction).save()
-
-            // try to error     
-            throw new Error('test transaction')
-
-        } catch (err) {
-            await transaction.rollback()
-        }
 })()
 ```
-## Model
-support hasOne ,hasMany,belongsTo,belongsToMany
+## Model Conventions
+basic model class and discuss some relations:
 
 ```js
-/**
- * Model
- *  
- * @Usage Model
-*/
 import { Model } from 'tspace-mysql'
 import Post from '../Post'
-import SubPost from '../SubPost'
-import Role from '../Role'
+import Comment from '../Comment'
+import User from '../User'
 
+Folder directory example
+- App
+  - Model
+    - Post.ts
+    - User.ts
+    - Comment.ts
+    
+*User.ts
 class User extends Model {
     constructor(){
         super()
-        this.hasMany({name : 'posts', model: Post })   
-        // relation child * prefix with relation parent ex phones.brand
-        this.hasMany({name : 'posts.sub_post', model: SubPost ,child : true}) 
-        this.belongsToMany({name : 'roles', model: Role }) 
+        this.hasMany({name : 'posts', model: Post })
+        this.hasMany({name : 'comments', model: Comment })
     }
 } 
 export default User
+
+*Post.ts
+class Post extends Model {
+    constructor(){
+        super()
+        this.belongsTo({name : 'user', model: User })
+        this.hasMany({ name : 'comments' , model : Comment })
+    }
+} 
+export default Post
+
+*Comment.ts
+class Comment extends Model {
+    constructor(){
+        super()
+        this.belongsTo({name : 'user', model: User })
+        this.belongsTo({name : 'post', model: Post })
+    }
+} 
+export default Comment
+
 (async () => {
-
-    await new User().with('posts').withChild('phones.brand').findMany()
-
+    await new User()
+        .with('posts','comments') /* relations -> hasMany: posts & comments  */
+        .withQuery('posts', (query) => query.with('user'))   /* relation -> belongsTo: post by user  */
+        .withQuery('comments', (query) => query.with('user','post'))   /* relation -> belongsTo: comment by user? & comment in post? */
+        .findMany()
 })()
+
 ```
 ## Method chaining
-method chaining for query data
+method chaining for queries
 ```js
-/**
- * Method
- * 
- * @Usage Method chaining
-*/
 where(column , operator , value)   
 whereSensitive(column , operator , value) 
 whereId(id)  
@@ -185,6 +113,8 @@ having (condition)
 latest (column)
 oldest (column)
 groupBy (column)
+
+action queries
 insert(objects)
 create(objects)
 createMultiple(array objects)
@@ -193,7 +123,6 @@ insertNotExists(objects)
 createNotExists(objects)
 updateOrInsert (objects)
 updateOrCreate (objects)
-
 /** 
  * relationship
  * 
@@ -201,24 +130,23 @@ updateOrCreate (objects)
 */
 with(name1 , name2,...nameN)
 withExists(name1 , name2,...nameN) 
-withChild(nameParent.nameChild1 , nameParent.nameChild2, ...n)
+withQuery('relation registry',(callback queries))
 
 /**
- * query statement
+ * queries statements
  * 
- *  @exec statement
+ *  @exec statements
 */
 findMany()
 findOne()
 find(id)
 first()
 get()
-all()
 exists ()
-onlyTrashed() // where soft delete
+onlyTrashed()
 toSQL()
-toJSON()
 toString()
+toJSON()
 toArray(column)
 count(column)
 sum(column)
@@ -226,8 +154,42 @@ avg(column)
 max(column)
 min(column)
 pagination({ limit , page })
-save() /*for statement insert or update */
+save() /*for action statements insert update or delete */
 ```
+
+## Transactions
+```js
+import { DB } from 'tspace-mysql'
+(async () => {
+   const transaction = await new DB().beginTransaction()
+   try {
+      const user : any = await new User().create({
+          name : 'tspace',
+          email : 'tspace@gmail.com'
+      })
+      .save(transaction)
+      
+       const posts : any = await new Post().createMultiple([
+            {   
+                user_id : user.id,
+                title : 'tspace post'
+            },
+            {   
+                user_id : user.id,
+                title : 'tspace post second'
+            }
+       ])
+      .save(transaction)
+      
+      throw new Error('transaction')
+      
+   } catch (err) {
+       const rollback = await transaction.rollback()
+       console.log(rollback ,'rollback !')
+   }
+})()
+```
+
 ## Cli
 npm install tspace-mysql -g
 ```js
