@@ -41,9 +41,9 @@ import User from '../User'
 Folder directory example
 - App
   - Model
-    - Post.ts
-    - User.ts
-    - Comment.ts
+    Post.ts
+    User.ts
+    Comment.ts
     
 *User.ts
 class User extends Model {
@@ -193,34 +193,30 @@ import { DB } from 'tspace-mysql'
 ## Cli
 npm install tspace-mysql -g
 ```js
-/**
- * 
- * 
- * @cli 
-*/ 
-npm install tspace-mysql -g
 
-- tspace-mysql make:model <FOLDER/NAME> | tspace-mysql make:model <FOLDER/NAME> --m  --f=... --name=....
+tspace-mysql make:model <FOLDER/NAME> 
+tspace-mysql make:model <FOLDER/NAME> --m  --f=... --name=....
     --m  /* created table for migrate in <FOLDER/migrations> */
-    --f=FOLDER/... 
-    /* created table for migrate in <CUSTOM FOLDER> default  <FOLDER/migrations> */ 
+    --f=FOLDER/...FORLDER /* created table for migrate in <CUSTOM FOLDER> default  <FOLDER/migrations> */ 
     --js /* extension .js default .ts */
-    --name=NAME /* class name default <NAME> in <FOLDER/NAME> */
+    --name=NAME /* class name default <NAME> in input cli */
 
-- tspace-mysql make:table <FOLDER> --name=....
-    --name=TABLENAME  /* created table for migrate in <FOLDER> */
+tspace-mysql make:table <FOLDER> --name=....
+    --name=TABLE_NAME  /* created table for migrate in <FOLDER> */
     --js /* extension .js default .ts */
 
-- tspace-mysql migrate <FOLDER> | tspace-mysql migrate <FOLDER> --js
+ tspace-mysql migrate <FOLDER> 
+ tspace-mysql migrate <FOLDER> --js
     --js /* extension .js default .ts */
     
+Ex.
 tspace-mysql make:model App/Models/User --m
 
-/*Ex folder 
+/* Ex folder 
 - node_modules
 - App
   - Models
-      User.ts
+     User.ts
 */
 
 /* in App/Models/User.ts */
@@ -228,24 +224,25 @@ import { Model } from 'tspace-mysql'
 class User extends Model{
   constructor(){
     super()
-    /**
-     * 
-     * 
-     *  @Config Model
-    */
     this.useDebug()  /* default false *debug sql */
     this.useTimestamp() /* default false * case created_at & updated_at*/
     this.useSoftDelete()  /*  default false * case where deleted_at is null  */
     this.useTable('users') /*  default users   */
     this.usePattern('camelCase') /*  default snake_case  */
-    this.useDefaultOrderBy('id',{ latest : true}) /*  default latest true *DESC  */
     this.useUUID()
-    this.useRegistry()
   }
 }
 export default User
 
 tspace-mysql make:table App/Models/migrations --name=users
+/* Ex folder 
+- node_modules
+- App
+  - Models
+    - migrations
+      create_users_table.ts
+    User.ts
+*/
 /* in App/Models/migrations/create_users_table.ts */
 import { Schema , Blueprint , DB } from 'tspace-mysql'
 (async () => {
@@ -256,14 +253,11 @@ import { Schema , Blueprint , DB } from 'tspace-mysql'
         email_verify : new Blueprint().tinyInt(),
         password : new Blueprint().varchar(255),
     })
-
-
     /**
      * 
      *  @Faker data
      *  await new DB().table('users').faker(5)
     */
-
 })()
 /* migrate all table in folder into database */
 tspace-mysql migrate App/Models/migrations
