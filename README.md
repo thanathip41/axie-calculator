@@ -121,6 +121,7 @@ export default Comment
         .withQuery('comments', (query) => query.with('user','post'))   /* relation -> belongsTo: comment by user? & comment in post? */
         .findMany()
 })()
+```
 
 ## Transactions & Rollback
 ```js
