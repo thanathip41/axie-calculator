@@ -30,6 +30,42 @@ import { DB } from 'tspace-mysql'
     await new DB().table('users').findMany()
     await new DB().table('users').select('id').where('id',1).findOne()
     await new DB().table('users').select('id').whereIn('id',[1,2,3]).findMany()
+    
+    /* created */
+    *ex pattern 1
+    const user = await new User().create({
+          name : 'tspace',
+          email : 'tspace@gmail.com'
+      }).save()
+
+     *ex pattern 2
+     const user = new User()
+         user.name = 'tspace'
+         user.email = 'tspace@gmail.com'
+         await user.save()
+     const { result } = user
+     
+     
+     /* updated */
+     *ex pattern 1
+     const user = await new User().update({
+          name : 'tspace',
+          email : 'tspace@gmail.com'
+      })
+      .where('id',1)
+      .save()
+
+    *ex pattern 2
+     const user = new User().where('id',1)
+         user.name = 'tspace'
+         user.email = 'tspace@gmail.com'
+         await user.save()
+     const { result } = user
+     
+     
+     /* deleted */
+     await new User().where('id',1).delete()
+     
 })()
 ```
 ## Model Conventions
@@ -85,6 +121,39 @@ export default Comment
         .withQuery('comments', (query) => query.with('user','post'))   /* relation -> belongsTo: comment by user? & comment in post? */
         .findMany()
 })()
+
+## Transactions & Rollback
+```js
+import { DB } from 'tspace-mysql'
+(async () => {
+   const transaction = await new DB().beginTransaction()
+   try {
+      const user = await new User().create({
+          name : 'tspace',
+          email : 'tspace@gmail.com'
+      })
+      .save(transaction)
+      
+       const posts = await new Post().createMultiple([
+            {   
+                user_id : user.id,
+                title : 'tspace post'
+            },
+            {   
+                user_id : user.id,
+                title : 'tspace post second'
+            }
+       ])
+      .save(transaction)
+      
+      throw new Error('transaction')
+      
+   } catch (err) {
+       const rollback = await transaction.rollback()
+       console.log(rollback ,'rollback !')
+   }
+})()
+```
 
 ```
 ## Method chaining
@@ -145,6 +214,7 @@ findOne()
 find(id)
 first()
 get()
+delelte()
 exists ()
 onlyTrashed()
 toSQL()
@@ -158,39 +228,6 @@ max(column)
 min(column)
 pagination({ limit , page })
 save() /*for action statements insert update or delete */
-```
-
-## Transactions
-```js
-import { DB } from 'tspace-mysql'
-(async () => {
-   const transaction = await new DB().beginTransaction()
-   try {
-      const user = await new User().create({
-          name : 'tspace',
-          email : 'tspace@gmail.com'
-      })
-      .save(transaction)
-      
-       const posts = await new Post().createMultiple([
-            {   
-                user_id : user.id,
-                title : 'tspace post'
-            },
-            {   
-                user_id : user.id,
-                title : 'tspace post second'
-            }
-       ])
-      .save(transaction)
-      
-      throw new Error('transaction')
-      
-   } catch (err) {
-       const rollback = await transaction.rollback()
-       console.log(rollback ,'rollback !')
-   }
-})()
 ```
 
 ## Cli
