@@ -166,13 +166,13 @@ import { DB } from 'tspace-mysql'
 (async () => {
    const transaction = await new DB().beginTransaction()
    try {
-      const user : any = await new User().create({
+      const user = await new User().create({
           name : 'tspace',
           email : 'tspace@gmail.com'
       })
       .save(transaction)
       
-       const posts : any = await new Post().createMultiple([
+       const posts = await new Post().createMultiple([
             {   
                 user_id : user.id,
                 title : 'tspace post'
