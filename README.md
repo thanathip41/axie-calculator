@@ -155,7 +155,6 @@ import { DB } from 'tspace-mysql'
 })()
 ```
 
-```
 ## Method chaining
 method chaining for queries
 ```js
