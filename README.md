@@ -22,11 +22,14 @@ DB_USERNAME = root
 DB_PASSWORD = password
 DB_DATABASE = database
 ```
-## Tspace-mysql: Getting Started
+## Getting Started
 ```js
 import { DB } from 'tspace-mysql'
 (async () => {
     await new DB().raw('SELECT * FROM users')
+    await new DB().table('users').findMany()
+    await new DB().table('users').select('id').where('id',1).findOne()
+    await new DB().table('users').select('id').whereIn('id',[1,2,3]).findMany()
 })()
 ```
 ## Model Conventions
