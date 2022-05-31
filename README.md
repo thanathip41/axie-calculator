@@ -35,6 +35,8 @@ import { DB } from 'tspace-mysql'
 ```
 create data
 ```js
+import { DB } from 'tspace-mysql'
+(async () => {
     *ex pattern 1
     const user = await new DB().table('users').create({
           name : 'tspace',
@@ -51,11 +53,13 @@ create data
       const { result : user } = u 
       /* or const user = await u.save() */
       console.log(user)
-    
+})()  
 ```
 
 update data
 ```js
+import { DB } from 'tspace-mysql'
+(async () => {
      *ex pattern 1
      const user = await new DB().table('users').update({
           name : 'tspace',
@@ -74,66 +78,15 @@ update data
      const { result : user } = u 
     /* or const user = await u.save() */
      console.log(user)
+})()
 ```    
 delete data
 ```js
-     await new User().where('id',1).delete()
-```    
-     
-## Model Conventions
-basic model class and discuss some relations:
-
-```js
-import { Model } from 'tspace-mysql'
-import Post from '../Post'
-import Comment from '../Comment'
-import User from '../User'
-
-Folder directory example
-- App
-  - Model
-    Post.ts
-    User.ts
-    Comment.ts
-    
-*User.ts
-class User extends Model {
-    constructor(){
-        super()
-        this.hasMany({name : 'posts', model: Post })
-        this.hasMany({name : 'comments', model: Comment })
-    }
-} 
-export default User
-
-*Post.ts
-class Post extends Model {
-    constructor(){
-        super()
-        this.belongsTo({name : 'user', model: User })
-        this.hasMany({ name : 'comments' , model : Comment })
-    }
-} 
-export default Post
-
-*Comment.ts
-class Comment extends Model {
-    constructor(){
-        super()
-        this.belongsTo({name : 'user', model: User })
-        this.belongsTo({name : 'post', model: Post })
-    }
-} 
-export default Comment
-
+import { DB } from 'tspace-mysql'
 (async () => {
-    await new User()
-        .with('posts','comments') /* relations -> hasMany: posts & comments  */
-        .withQuery('posts', (query) => query.with('user'))   /* relation -> belongsTo: post by user  */
-        .withQuery('comments', (query) => query.with('user','post'))   /* relation -> belongsTo: comment by user? & comment in post? */
-        .findMany()
+     await new User().where('id',1).delete()
 })()
-```
+``` 
 
 ## Transactions & Rollback
 ```js
@@ -159,13 +112,80 @@ import { DB } from 'tspace-mysql'
        ])
       .save(transaction)
       
-      throw new Error('transaction')
+      throw new Error('try to transaction')
       
    } catch (err) {
        const rollback = await transaction.rollback()
        console.log(rollback ,'rollback !')
    }
 })()
+```
+     
+## Model Conventions
+basic model class and discuss some relations:
+
+```js
+import { Model } from 'tspace-mysql'
+import Post from '../Post'
+import Comment from '../Comment'
+import User from '../User'
+
+Folder directory example
+- App
+  - Model
+    Post.ts
+    User.ts
+    Comment.ts
+    
+(async () => {
+    const users = await new User()
+        .with('posts','comments') /* relations -> hasMany: posts & comments  */
+        .withQuery('posts', (query) => query.with('user'))   /* relation -> belongsTo: post by user  */
+        .withQuery('comments', (query) => query.with('user','post'))   /* relation -> belongsTo: comment by user? & comment in post? */
+        .findMany()
+        
+    console.log(users)    
+})()
+```
+*User.ts
+```js
+import { Model } from 'tspace-mysql'
+class User extends Model {
+    constructor(){
+        super()
+        this.hasMany({name : 'posts', model: Post })
+        this.hasMany({name : 'comments', model: Comment })
+    }
+} 
+export default User
+```
+
+*Post.ts
+```js
+import { Model } from 'tspace-mysql'
+
+class Post extends Model {
+    constructor(){
+        super()
+        this.belongsTo({name : 'user', model: User })
+        this.hasMany({ name : 'comments' , model : Comment })
+    }
+} 
+export default Post
+```
+
+*Comment.ts
+```js
+import { Model } from 'tspace-mysql'
+
+class Comment extends Model {
+    constructor(){
+        super()
+        this.belongsTo({name : 'user', model: User })
+        this.belongsTo({name : 'post', model: Post })
+    }
+} 
+export default Comment
 ```
 
 ## Method chaining
