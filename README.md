@@ -14,7 +14,7 @@ npm install tspace-mysql --save
 
 ```
 ## Setup
-create  .env file
+.env file
 ```js
 DB_HOST = localhost
 DB_PORT = 3306
@@ -34,6 +34,7 @@ import { DB } from 'tspace-mysql'
 })()
 ```
 create data
+
 ```js
 import { DB } from 'tspace-mysql'
 (async () => {
@@ -266,24 +267,26 @@ save() /*for action statements insert update or delete */
 npm install tspace-mysql -g
 ```js
 
-tspace-mysql make:model <FOLDER/NAME> 
-tspace-mysql make:model <FOLDER/NAME> --m  --f=... --name=....
+tspace-mysql make:model <folder/name model> --m  --f=... --name=.... --js
+* optional
     --m  /* created table for migrate in <FOLDER/migrations> */
-    --f=FOLDER/...FORLDER /* created table for migrate in <CUSTOM FOLDER> default  <FOLDER/migrations> */ 
+    --f=folder/...folder /* created table for migrate in <CUSTOM FOLDER> default  <FOLDER/migrations> */ 
     --js /* extension .js default .ts */
     --name=NAME /* class name default <NAME> in input cli */
 
-tspace-mysql make:table <FOLDER> --name=....
-    --name=TABLE_NAME  /* created table for migrate in <FOLDER> */
-    --js /* extension .js default .ts */
-
- tspace-mysql migrate <FOLDER> 
- tspace-mysql migrate <FOLDER> --js
+tspace-mysql make:table <folder> --name=....
+* required
+    --name=TABLE_NAME  /* created table for migrate in <folder> */
+* optional
     --js /* extension .js default .ts */
     
-Ex.
-tspace-mysql make:model App/Models/User --m
+ tspace-mysql migrate <folder> --js
+ * optional
+    --js /* extension .js default .ts */
+```
 
+tspace-mysql make:model App/Models/User --m
+```js
 /* Ex folder 
 - node_modules
 - App
@@ -333,4 +336,40 @@ import { Schema , Blueprint , DB } from 'tspace-mysql'
 })()
 /* migrate all table in folder into database */
 tspace-mysql migrate App/Models/migrations
+```js
+* Blueprint method
+```
+    /**
+     * 
+     * @Types
+     * 
+    */
+    int ()
+    tinyInt (n) 
+    bigInt (n)
+    double ()
+    float ()
+    varchar (n)
+    char (n)
+    longText()
+    mediumText()
+    tinyText()
+    text()
+    enum(...n)
+    date()
+    dateTime()
+    timestamp ()
+    /**
+     * 
+     * @Attrbuites
+     * 
+    */
+    unsigned ()
+    unique ()
+    null ()
+    notNull ()
+    primary() 
+    default (n) 
+    defaultTimestamp () 
+    autoIncrement () 
 ```
