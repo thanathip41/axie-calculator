@@ -23,6 +23,7 @@ DB_PASSWORD = password
 DB_DATABASE = database
 ```
 ## Getting Started
+queries data
 ```js
 import { DB } from 'tspace-mysql'
 (async () => {
@@ -30,44 +31,55 @@ import { DB } from 'tspace-mysql'
     await new DB().table('users').findMany()
     await new DB().table('users').select('id').where('id',1).findOne()
     await new DB().table('users').select('id').whereIn('id',[1,2,3]).findMany()
-    
-    /* created */
+})()
+```
+create data
+```js
     *ex pattern 1
-    const user = await new User().create({
+    const user = await new DB().table('users').create({
           name : 'tspace',
           email : 'tspace@gmail.com'
       }).save()
+      
+      console.log(user)
 
      *ex pattern 2
-     const user = new User()
-         user.name = 'tspace'
-         user.email = 'tspace@gmail.com'
-         await user.save()
-     const { result } = user
-     
-     
-     /* updated */
+     const u = new DB().table('users')
+         u.name = 'tspace'
+         u.email = 'tspace@gmail.com'
+         await u.save()
+      const { result : user } = u 
+      /* or const user = await u.save() */
+      console.log(user)
+    
+```
+
+update data
+```js
      *ex pattern 1
-     const user = await new User().update({
+     const user = await new DB().table('users').update({
           name : 'tspace',
           email : 'tspace@gmail.com'
       })
       .where('id',1)
       .save()
+      
+      console.log(user)
 
     *ex pattern 2
-     const user = new User().where('id',1)
-         user.name = 'tspace'
-         user.email = 'tspace@gmail.com'
-         await user.save()
-     const { result } = user
-     
-     
-     /* deleted */
+     const u = new DB().table('users').where('id',1)
+         u.name = 'tspace'
+         u.email = 'tspace@gmail.com'
+         await u.save()
+     const { result : user } = u 
+    /* or const user = await u.save() */
+     console.log(user)
+```    
+delete data
+```js
      await new User().where('id',1).delete()
+```    
      
-})()
-```
 ## Model Conventions
 basic model class and discuss some relations:
 
