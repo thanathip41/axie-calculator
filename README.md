@@ -308,9 +308,8 @@ class User extends Model{
 }
 export default User
 ```
-
+tspace-mysql make:table App/Models/Migrations --name=users
 ```js
-tspace-mysql make:table App/Models/migrations --name=users
 /* Ex folder 
 - node_modules
 - App
@@ -319,7 +318,7 @@ tspace-mysql make:table App/Models/migrations --name=users
       create_users_table.ts
     User.ts
 */
-/* in App/Models/migrations/create_users_table.ts */
+/* in App/Models/Migrations/create_users_table.ts */
 import { Schema , Blueprint , DB } from 'tspace-mysql'
 (async () => {
     await new Schema().table('users',{ 
@@ -336,7 +335,7 @@ import { Schema , Blueprint , DB } from 'tspace-mysql'
     */
 })()
 ```
-tspace-mysql migrate App/Models/migrations
+tspace-mysql migrate App/Models/Migrations
 /* migrate all table in folder into database */
 ```js
 * Blueprint method
