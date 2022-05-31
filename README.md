@@ -219,7 +219,6 @@ latest (column)
 oldest (column)
 groupBy (column)
 
-action queries
 insert(objects)
 create(objects)
 createMultiple(array objects)
@@ -308,7 +307,9 @@ class User extends Model{
   }
 }
 export default User
+```
 
+```js
 tspace-mysql make:table App/Models/migrations --name=users
 /* Ex folder 
 - node_modules
@@ -334,11 +335,11 @@ import { Schema , Blueprint , DB } from 'tspace-mysql'
      *  await new DB().table('users').faker(5)
     */
 })()
-/* migrate all table in folder into database */
+```
 tspace-mysql migrate App/Models/migrations
+/* migrate all table in folder into database */
 ```js
 * Blueprint method
-```
     /**
      * 
      * @Types
